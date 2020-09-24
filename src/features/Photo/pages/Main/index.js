@@ -34,7 +34,9 @@ function MainPage(props) {
     <div className="photo-main">
       <Banner title="Your awesome photos" backgroundUrl={Images.PINK_BG} />
       <Container className="text-center">
-        <Link to="/photos/add">Add new photo</Link>
+        <Link class="btn btn-primary add-btn" to="/photos/add">
+          Add new photo
+        </Link>
         <PhotoList
           photoList={photos}
           onPhotoEditClick={handlePhotoEditClick}
