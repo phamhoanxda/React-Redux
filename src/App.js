@@ -1,6 +1,7 @@
+import productApi from "api/productApi";
 import SignIn from "features/Auth/pages";
 import firebase from "firebase";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import "reactstrap";
 import "./App.scss";
@@ -38,6 +39,26 @@ function App() {
       });
     //UNMOUNT
     return () => unregisterAuthObserver();
+  }, []);
+
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    const fetchProductList = async () => {
+      try {
+        const params = {
+          _page: 1,
+          _limit: 10,
+        };
+
+        const response = await productApi.getAll(params);
+        setProductList(response.data);
+        console.log(response);
+      } catch (error) {
+        console.log("failed to fetch api: ", error);
+      }
+    };
+    fetchProductList();
   }, []);
 
   return (
